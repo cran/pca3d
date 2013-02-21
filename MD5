@@ -1,6 +1,9 @@
-f8cab65a3dbe28a868a8db4df0425a6b *DESCRIPTION
-8b54e5a89fbda3af5e077053d40bec76 *NAMESPACE
-dabd7e4cf4bcd8bc0cc0ded7f235a2f0 *R/pca3d.R
+30bcfb8eab95b346ebf27287dc7662df *DESCRIPTION
+c0264190957908f7d5e3f419f38b2be8 *NAMESPACE
+995c28ffd9926a9e18aea421fe53315b *R/helpers.R
+7853af2198f4517fbe0e8f609d66ba44 *R/objects3d.R
+eaef4dfa4beefd8de309b04a0ff64375 *R/pca2d.R
+333e28c69abbbd8c0bb90cf6da520d13 *R/pca3d.R
 e3a926ade64054730b248779ab5218ba *data/metabo.rda
-a43df9929dac56ab674e788bced0511d *man/metabo.Rd
-a2bf1c8e956165c1a7345e36829298d3 *man/pca3d-package.Rd
+18003bb6a411ab7ba80bd9c402ca19c4 *man/metabo.Rd
+ad2d1e35b12d5b42c453e70436925c18 *man/pca3d-package.Rd
