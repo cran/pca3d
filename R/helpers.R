@@ -1,6 +1,6 @@
 
 printf <- function( ... ) print( sprintf( ... ) ) 
-catf <- function( ... ) cat( sprintf( ... ) ) 
+catf   <- function( ... ) cat( sprintf( ... ) ) 
 
 calc.centroids <- function( coords, group ) {
 
@@ -55,4 +55,8 @@ print.legend <- function( group, group.col, group.shape ) {
     catf( fmt, levels( group )[i], group.col[i], group.shape[i])
   }
   cat( "\n" )
+
+  ret <- data.frame( groups= levels( group ), colors= group.col, shapes= group.shape )
+
+  return( invisible( ret ) )
 }

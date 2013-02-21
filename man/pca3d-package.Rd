@@ -18,8 +18,9 @@ pca3d(pca, components = 1:3, col = "grey", title = NULL, new = FALSE,
   biplot = FALSE, biplot.vars = 5, 
   show.scale = FALSE, 
   show.labels = FALSE, labels.col = "black", show.axes = TRUE, 
-  show.axe.titles = TRUE, show.plane = TRUE, show.shadows = FALSE, 
-  show.centroids = FALSE, show.group.labels = FALSE)
+  show.axe.titles = TRUE, axe.titles= NULL, 
+  show.plane = TRUE, show.shadows = FALSE, 
+  show.centroids = FALSE, show.group.labels = FALSE, show.shapes= TRUE)
 
 pca2d(pca, components = 1:2, col = "grey", title = NULL, new = FALSE, 
   axes.color = "black", bg = "white", radius = NULL, 
@@ -27,7 +28,8 @@ pca2d(pca, components = 1:2, col = "grey", title = NULL, new = FALSE,
   biplot = FALSE, biplot.vars = 5, 
   show.scale = FALSE, 
   show.labels = FALSE, labels.col = "black", show.axes = TRUE, 
-  show.axe.titles = TRUE, show.plane = TRUE, show.shadows = FALSE, 
+  show.axe.titles = TRUE, axe.titles= NULL,
+  show.plane = TRUE, show.shadows = FALSE, 
   show.centroids = FALSE, show.group.labels = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -113,6 +115,11 @@ pca2d(pca, components = 1:2, col = "grey", title = NULL, new = FALSE,
 
   This option has no effect in pca2d.
 }
+  \item{axe.titles}{
+  A vector with two (pca2d) or three (pca3d) values containing the axe
+  titles (corresponds to xlab and ylab in regular plot). If missing, but
+  show.axe.titles is TRUE, axe titles will be generated automatically.
+}
   \item{show.plane}{
   If TRUE, show a grey horizontal plane at y = 0.
 
@@ -139,6 +146,12 @@ pca2d(pca, components = 1:2, col = "grey", title = NULL, new = FALSE,
     parameter is TRUE, then the group names will be taken from the
     \code{group} parameter. Otherwise, the values from this parameter will
     be used.
+  }
+  \item{show.shapes}{
+      A TRUTH/FALSE value indicating whether the different symbols (shapes)
+      for the shown data points should be plotted (default TRUE).
+
+
   }
   \item{...}{
 
@@ -189,7 +202,12 @@ pca2d(pca, components = 1:2, col = "grey", title = NULL, new = FALSE,
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
-No value is returned.
+The functions pca3d and pca2d both return a data frame containing the annotations of the
+symbols used. This data frame contains the following columns:
+\item{group}{Group names}
+\item{colors}{associated colors}
+\item{shapes}{associated shapes}
+This comes in handy if you want to add a legend to your plot.
 }
 %\references{
 %% ~put references to the literature/web site here ~

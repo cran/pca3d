@@ -65,6 +65,7 @@ function( pca, components= 1:2, col= "grey", title= NULL, new= FALSE,
   labels.col= "black",
   show.axes= TRUE,
   show.axe.titles= TRUE,
+  axe.titles= NULL,
   show.plane= TRUE,
   show.shadows= FALSE,
   show.centroids= FALSE,
@@ -107,6 +108,8 @@ function( pca, components= 1:2, col= "grey", title= NULL, new= FALSE,
   pca.coords <- pca.coords[ , components ]
   n.p <- nrow( pca.coords )
 
+  ret <- NULL
+
   if( ! missing( group ) ) {
     group <- factor( group )
     g.n   <- as.numeric( group )
@@ -124,7 +127,7 @@ function( pca, components= 1:2, col= "grey", title= NULL, new= FALSE,
     group.shape          <- shape[ match( levels( group ), group ) ]
     names( group.shape ) <- levels( group )
 
-    print.legend( group, group.col, group.shape )
+    ret <- print.legend( group, group.col, group.shape )
   }
 
   if( length( shape ) > 1 ) {
@@ -167,11 +170,21 @@ function( pca, components= 1:2, col= "grey", title= NULL, new= FALSE,
       range$y <- range( pca.coords[,2] )
     }
 
+
+    if( is.null( axe.titles ) ) {
+      xlab= paste( "PC", components[1] ) 
+      ylab= paste( "PC", components[2] )
+    } else {
+      xlab= axe.titles[1] 
+      ylab= axe.titles[2] ;
+    }
+
+
     plot( NULL, type= "n", 
       xlim= range$x,
       ylim= range$y,
-      xlab= paste( "PC", components[1] ),
-      ylab= paste( "PC", components[2] )
+      xlab= xlab,
+      ylab= ylab
        ) 
 
     usr <- par( "usr" )
@@ -205,5 +218,5 @@ function( pca, components= 1:2, col= "grey", title= NULL, new= FALSE,
 
   if( biplot )            .biplot.2D( biplot.coords, biplot.vars )
 
-  return( invisible( NULL ) )
+  return( invisible( ret ) )
 }

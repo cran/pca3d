@@ -70,13 +70,16 @@
    texts3d( centr.coords[,1], centr.coords[,2], centr.coords[,3], levels( group ), col= "black", cex= 2, ... )
 }
 
-.show.axe.titles <- function( r, show.scale, axes.color, components ) {
-      titles = paste( "PC", components )
+.show.axe.titles <- function( r, show.scale, axes.color, components, axe.titles ) {
+      if( missing( axe.titles ) | is.null( axe.titles ) ) {
+        axe.titles = paste( "PC", components )
+      }
+
       
       texts3d( 
         c( 1.1*r[ 2,1 ], 0, 0 ),
         c( 0, 1.1*r[ 2,2 ], 0 ),
-        c( 0, 0, 1.1*r[ 2,3 ] ), col= "black", titles ) 
+        c( 0, 0, 1.1*r[ 2,3 ] ), col= "black", axe.titles ) 
 
     
     if( show.scale ) {
@@ -287,10 +290,13 @@ pca3d <- function( pca, components= 1:3, col= "grey", title= NULL, new= FALSE,
   labels.col= "black",
   show.axes= TRUE,
   show.axe.titles= TRUE,
+  axe.titles= NULL,
   show.plane= TRUE,
   show.shadows= FALSE,
   show.centroids= FALSE,
-  show.group.labels= FALSE
+  show.group.labels= FALSE,
+  show.shapes= TRUE
+
   ) {
 
   if( fancy ) {
@@ -323,6 +329,7 @@ pca3d <- function( pca, components= 1:3, col= "grey", title= NULL, new= FALSE,
   n.p <- nrow( pca.coords )
   main.ranges <- apply( pca.coords, 2, function( x ) c( -max( abs( range( x ) ) ), max( abs( range( x ) ) ) ) )
 
+  ret <- NULL
   if( ! missing( group ) ) {
     group <- factor( group )
     g.n   <- as.numeric( group )
@@ -340,7 +347,7 @@ pca3d <- function( pca, components= 1:3, col= "grey", title= NULL, new= FALSE,
     group.shape <- shape[ match( levels( group ), group ) ]
     names( group.shape ) <- levels( group )
 
-    print.legend( group, group.col, group.shape )
+    ret <- print.legend( group, group.col, group.shape )
     
   }
 
@@ -399,7 +406,7 @@ pca3d <- function( pca, components= 1:3, col= "grey", title= NULL, new= FALSE,
 
     if( show.axes ) .show.axes( axes.color, main.ranges * 1.1 )
 
-    if( show.axe.titles ) .show.axe.titles( main.ranges, show.scale, axes.color, components )
+    if( show.axe.titles ) .show.axe.titles( main.ranges, show.scale, axes.color, components, axe.titles )
     
     if( show.scale ) {
 
@@ -431,11 +438,13 @@ pca3d <- function( pca, components= 1:3, col= "grey", title= NULL, new= FALSE,
   if( show.centroids ) .centroids.3D( pca.coords, group, 2 * radius, group.shape, group.col, shape.functions )
   if( show.group.labels ) .group.labels( pca.coords, group )
 
-  for( s in unique( shape ) ) {
-    for( c in unique( col ) ) {
-      sel <- which( shape == s & col == c )
-      if( length( sel ) > 0 ) {
-        shape.functions[[s]]( pca.coords[ sel, ], col= as.character( c ), alpha= 1, radius= radius, shininess= 100 ) 
+  if( show.shapes ) {
+    for( s in unique( shape ) ) {
+      for( c in unique( col ) ) {
+        sel <- which( shape == s & col == c )
+        if( length( sel ) > 0 ) {
+          shape.functions[[s]]( pca.coords[ sel,, drop=F ], col= as.character( c ), alpha= 1, radius= radius, shininess= 100 ) 
+        }
       }
     }
   }
@@ -447,8 +456,9 @@ pca3d <- function( pca, components= 1:3, col= "grey", title= NULL, new= FALSE,
     if( class( show.labels ) == "logical" & length( show.labels ) == 1 ) {
       show.labels <- rownames( pca.coords )
     }
-    texts3d( pca.coords[,1], pca.coords[,2], pca.coords[,3], show.labels, col= labels.col )
+    texts3d( pca.coords[,1], pca.coords[,2], pca.coords[,3], show.labels, col= labels.col, adj= c( 1, 1 ) )
   }
 
   pca_plot_finish() 
+  return( invisible( ret ) )
 }
