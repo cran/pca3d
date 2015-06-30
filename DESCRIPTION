@@ -1,14 +1,16 @@
 Package: pca3d
 Type: Package
-Title: Three dimensional PCA plots
-Version: 0.3
-Date: 2013-02-21
+Title: Three Dimensional PCA Plots
+Version: 0.8
+Date: 2015-06-30
 Author: January Weiner
+URL: http://logfc.wordpress.com
 Maintainer: January Weiner <january.weiner@gmail.com>
-Description: This package provides a function simplifying presentation of PCA models in a 3D interactive representation using rgl
+Description: Functions simplifying presentation of PCA models in a 3D interactive representation using 'rgl'.
 License: GPL-2
-Imports: rgl
-Packaged: 2014-11-04 14:47:36.179 UTC; january
+Imports: rgl,ellipse
+Suggests: knitr
 NeedsCompilation: no
+Packaged: 2015-07-01 15:00:30.059 UTC; january
 Repository: CRAN
-Date/Publication: 2014-11-05 00:20:50
+Date/Publication: 2015-07-01 22:59:10

@@ -1,60 +1,72 @@
-# draw a series of tetrahaedrons
-tetrahaedrons3d <- function( coords, radius= c( 1, 1, 1 ), col= "grey", ... ) {
+# draw a series of tetrahedrons
+tetrahedrons3d <- function( coords, radius= c( 1, 1, 1 ), col= "grey", ... ) {
   coords.n <- NULL
   
-  for( r in 1:nrow( coords ) ) {
-    p <- coords[ r, ] 
+  r <- 2 * radius / 3 
+  for( i in 1:nrow( coords ) ) {
+    shade3d(translate3d(
+      scale3d(
+        rotate3d(tetrahedron3d(col=col, ...), 2, 0, 1, 1), 
+        r[1], r[2], r[3]),
+      coords[i,1], coords[i,2], coords[i,3]))
 
-    # ABC
-    coords.n <- rbind( coords.n, p + c( -radius[1], 0, -radius[3]/sqrt(2) ) ) # A
-    coords.n <- rbind( coords.n, p + c(  radius[1], 0, -radius[3]/sqrt(2) ) ) # B
-    coords.n <- rbind( coords.n, p + c(  0,  radius[2], radius[3]/sqrt(2) ) )  # C
-
-    # ABD
-    coords.n <- rbind( coords.n, p + c( -radius[1], 0, -radius[3]/sqrt(2) ) ) # A
-    coords.n <- rbind( coords.n, p + c(  radius[1], 0, -radius[3]/sqrt(2) ) ) # B
-    coords.n <- rbind( coords.n, p + c(  0, -radius[2], radius[3]/sqrt(2) ) )  # D
-
-    # ACD
-    coords.n <- rbind( coords.n, p + c( -radius[1], 0, -radius[3]/sqrt(2) ) ) # A
-    coords.n <- rbind( coords.n, p + c(  0,  radius[2], radius[3]/sqrt(2) ) )  # C
-    coords.n <- rbind( coords.n, p + c(  0, -radius[2], radius[3]/sqrt(2) ) )  # D
-
-    # BCD
-    coords.n <- rbind( coords.n, p + c(  radius[1], 0, -radius[3]/sqrt(2) ) ) # B
-    coords.n <- rbind( coords.n, p + c(  0,  radius[2], radius[3]/sqrt(2) ) )  # C
-    coords.n <- rbind( coords.n, p + c(  0, -radius[2], radius[3]/sqrt(2) ) )  # D
   }
+#   p <- coords[ r, ] 
+#
+#   # ABC
+#   coords.n <- rbind( coords.n, p + c( -radius[1], 0, -radius[3]/sqrt(2) ) ) # A
+#   coords.n <- rbind( coords.n, p + c(  radius[1], 0, -radius[3]/sqrt(2) ) ) # B
+#   coords.n <- rbind( coords.n, p + c(  0,  radius[2], radius[3]/sqrt(2) ) )  # C
+#
+#   # ABD
+#   coords.n <- rbind( coords.n, p + c( -radius[1], 0, -radius[3]/sqrt(2) ) ) # A
+#   coords.n <- rbind( coords.n, p + c(  radius[1], 0, -radius[3]/sqrt(2) ) ) # B
+#   coords.n <- rbind( coords.n, p + c(  0, -radius[2], radius[3]/sqrt(2) ) )  # D
+#
+#   # ACD
+#   coords.n <- rbind( coords.n, p + c( -radius[1], 0, -radius[3]/sqrt(2) ) ) # A
+#   coords.n <- rbind( coords.n, p + c(  0,  radius[2], radius[3]/sqrt(2) ) )  # C
+#   coords.n <- rbind( coords.n, p + c(  0, -radius[2], radius[3]/sqrt(2) ) )  # D
+#
+#   # BCD
+#   coords.n <- rbind( coords.n, p + c(  radius[1], 0, -radius[3]/sqrt(2) ) ) # B
+#   coords.n <- rbind( coords.n, p + c(  0,  radius[2], radius[3]/sqrt(2) ) )  # C
+#   coords.n <- rbind( coords.n, p + c(  0, -radius[2], radius[3]/sqrt(2) ) )  # D
+# }
+#
+# triangles3d( coords.n, col= col, ... )
+#
+}
 
-  triangles3d( coords.n, col= col, ... )
+
+## construct octahedrons
+octahedrons3d <- function( coords, radius= c( 1, 1, 1), col= "grey", ... ) {
+  coords.n <- NULL
+  r <- radius
+  for( i in 1:nrow( coords ) ) {
+    shade3d(translate3d(
+      scale3d(
+        octahedron3d(col=col, ...), 
+        r[1], r[2], r[3]),
+      coords[i,1], coords[i,2], coords[i,3]))
+  }
 
 }
 
 
 
+## construct cubes
 cubes3d <- function( coords, radius= c( 1, 1, 1), col= "grey", ... ) {
   coords.n <- NULL
   r <- 2 * radius / 3 
   for( i in 1:nrow( coords ) ) {
-    p <- coords[ i, ]
+    shade3d(translate3d(
+      scale3d(
+        cube3d(col=col, ...), 
+        r[1], r[2], r[3]),
+      coords[i,1], coords[i,2], coords[i,3]))
+  }
 
-    for( j in 1:3 ) {
-      other <- (1:3)[ -j ]
-      oa <- other[1]
-      ob <- other[2]
-      for( t in c( -r[j], r[j] ) ) {
-        for( q in c( -1, 1 ) ) {
-          tmp <- matrix( 0, nrow= 3, ncol= 3 )
-          tmp[ , oa ] <- c( q * r[oa], q * r[oa], -q * r[oa ] )
-          tmp[ , ob ] <- c( q * r[ob], -q * r[ob], q * r[ob ] )
-          tmp[ , j  ] <- rep( t, 3 )
-          tmp <- t( apply( tmp, 1, function( x ) p + x ) )
-          coords.n <- rbind( coords.n, tmp )
-        }
-      }
-    }
-  }       
-  triangles3d( coords.n, col= col, ... )
 }
 
 # return the basic cone mesh
