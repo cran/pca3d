@@ -1,3 +1,6 @@
+0.10
+ * Fixed a problem with vignettes
+
 0.3 January Weiner <january.weiner@gmail.com>
  * pca3d and pca2d return now a data frame that is useful for generating a legend.
  * corrected an error which prevented displaying 1-item groups correctly.
