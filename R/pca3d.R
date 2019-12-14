@@ -272,7 +272,7 @@
 }
 
 .labels.3D <- function(show.labels, pca.coords, labels.col, n.p) {
-  if(class(show.labels) == "logical" && length(show.labels) == 1) {
+  if(is.logical(show.labels) && length(show.labels) == 1) {
     show.labels <- rownames(pca.coords)
   }
   if(is.null(show.labels)) show.labels <- 1:n.p

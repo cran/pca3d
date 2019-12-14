@@ -206,7 +206,7 @@ function(pca, components=1:2, col=NULL, title=NULL, new=FALSE,
 
   # add legends for all points
   if(! missing(show.labels)) {
-    if(class(show.labels) == "logical" & length(show.labels) == 1) {
+    if(is.logical(show.labels) && length(show.labels) == 1) {
       show.labels <- rownames(pca.coords)
     }
 

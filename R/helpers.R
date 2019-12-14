@@ -83,11 +83,14 @@ get.pca.coords <- function(pca, n, components=1:n) {
     components <- components[1:n]
   }
 
-  ret <- switch(class(pca),
-    prcomp=pca$x,
-    princomp=pca$scores,
-    matrix=pca,
-    stop("pca must be either a matrix or a PCA object (prcomp, princomp etc.)"))
+  ret <- if(inherits(pca, "prcomp"))
+             pca$x
+         else if(inherits(pca, "princomp"))
+             pca$scores
+         else if(inherits(pca, "matrix"))
+             pca
+         else
+             stop("pca must be either a matrix or a PCA object (prcomp, princomp etc.)")
 
   if(ncol(ret) < n || ncol(ret) < max(components)) {
     stop(sprintf("Not enough dimensions: %d, but at least %d are needed",
@@ -100,9 +103,9 @@ get.pca.coords <- function(pca, n, components=1:n) {
 ## extract coordinates of variable loadings
 get.biplot.coords <- function(pca, biplot) {
 
-  if(class(biplot) == "matrix") return(biplot)
-  if(class(pca) == "prcomp")    return(pca$rotation)
-  if(class(pca) == "princomp")  return(pca$loadings)
+  if(inherits(biplot, "matrix")) return(biplot)
+  if(inherits(pca, "prcomp"))    return(pca$rotation)
+  if(inherits(pca, "princomp"))  return(pca$loadings)
 
   stop("For a biplot, another matrix or a prcomp object as pca is needed")
 }
