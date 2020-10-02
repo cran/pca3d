@@ -1,18 +1,20 @@
 Package: pca3d
 Type: Package
 Title: Three Dimensional PCA Plots
-Version: 0.10.1
-Date: 2017-02-17
+Version: 0.10.2
+Date: 2020-10-02
 Author: January Weiner
-URL: http://logfc.wordpress.com
+URL: https://logfc.wordpress.com
 Maintainer: January Weiner <january.weiner@gmail.com>
 Description: Functions simplifying presentation of PCA models in a 3D interactive representation using 'rgl'.
 License: GPL-2
 Imports: rgl,ellipse
-Suggests: knitr
+Suggests: knitr,rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-12-14 16:05:39 UTC; hornik
 Repository: CRAN
-Date/Publication: 2019-12-14 16:16:17 UTC
+Date/Publication: 2020-10-02 15:10:06 UTC
 Depends: R (>= 2.10)
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+Packaged: 2020-10-02 13:51:35 UTC; january
